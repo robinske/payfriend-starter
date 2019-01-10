@@ -80,3 +80,86 @@ def create_authy_user(email, country_code, phone):
     else:
         flash("Error creating Authy user: {}".format(authy_user.errors()))
         return None
+
+
+def send_sms_auth(payment):
+    """
+    Sends an SMS one time password (OTP) to the user's phone_number
+
+    :returns (sms_id, errors): tuple of sms_id (if successful)
+                               and errors dict (if unsuccessful)
+    """
+    api = get_authy_client()
+    session['payment_id'] = payment.id
+    options = {
+        'force': True,
+        'action': payment.id,
+        'action_message': 'Verify Payment to {} for {}'.format(
+            payment.send_to,
+            payment.amount)
+    }
+    resp = api.users.request_sms(payment.authy_id, options)
+    if resp.ok():
+        flash(resp.content['message'])
+        return True
+    else:
+        flash(resp.errors()['message'])
+        return False
+
+
+def check_sms_auth(authy_id, payment_id, code):
+    """
+    Validates an one time password (OTP)
+    """
+    api = get_authy_client()
+    try: 
+        options = {
+            'force': True,
+            'action': payment_id,
+        }
+        resp = api.tokens.verify(authy_id, code, options)
+        if resp.ok():
+            return True
+        else:
+            flash(resp.errors()['message'])
+    except Exception as e:
+        flash("Error validating code: {}".format(e))
+    
+    return False
+
+
+def send_push_auth(authy_id_str, send_to, amount):
+    """
+    Sends a push authorization with payment details to the user's Authy app
+
+    :returns (push_id, errors): tuple of push_id (if successful)
+                                and errors dict (if unsuccessful)
+    """
+    details = {
+        "Sending to": send_to,
+        "Transaction amount": str('${:,.2f}'.format(amount))
+    }
+
+    hidden_details = {
+        "user_ip_address": request.environ.get('REMOTE_ADDR', request.remote_addr),
+        "requester_user_id": str(g.user.id)
+    }
+
+    logos = [dict(res = 'default', url = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/155/money-bag_1f4b0.png')]
+
+    api = get_authy_client()
+    resp = api.one_touch.send_request(
+        user_id=int(authy_id_str),
+        message="Please authorize payment to {}".format(send_to),
+        seconds_to_expire=1200,
+        details=details,
+        hidden_details=hidden_details,
+        logos=logos
+    )
+
+    if resp.ok():
+        push_id = resp.content['approval_request']['uuid']
+        return (push_id, {})
+    else:
+        flash(resp.errors()['message'])
+        return (None, resp.errors())

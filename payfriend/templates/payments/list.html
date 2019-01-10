@@ -9,6 +9,7 @@
     <th>Payment ID</th>
     <th>Sent to</th>
     <th>Amount</th>
+    <th>Status</th>
   </tr>
 {% for payment in payments %}
 <tr>
@@ -16,6 +17,7 @@
   <td>{{ payment.id }}</td>
   <td>{{ payment.send_to }}</td>
   <td>{{ "${:,.2f}".format(payment.amount) }}</td> 
+  <td>{{ payment.status }}</td>
 </tr>
 {% endfor %} 
 </table>
