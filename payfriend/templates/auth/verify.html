@@ -1,0 +1,16 @@
+{% extends 'base.html' %} 
+{% block header %}
+  <h1>
+    {% block title %}Verify{% endblock %}
+  </h1>
+{% endblock %} 
+{% block content %}
+<form method="POST">
+  {{ form.hidden_tag() }}
+
+  {% from "_formhelpers.html" import render_field %}
+
+  {{ render_field(form.verification_code) }}
+  <button name="form-submit" type="submit">Submit</button>
+</form>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %} 
+{% block header %}
+<h1>{% block title %}Users{% endblock %}</h1>
+{% endblock %} 
+{% block content %} 
+<table style="width:100%">
+  <tr>
+    <th>ID</th>
+    <th>Email</th>
+    <th>Phone Number</th>
+    <th>Authy ID</th>
+  </tr>
+{% for user in users %}
+<tr>
+  <td>{{ user["id"] }}</td>
+  <td>{{ user["email"] }}</td>
+  <td>{{ user["phone_number"] }}</td>
+  <td>{{ user["authy_id"] }}</td>
+</tr>
+{% endfor %} 
+</table>
+{% endblock %}

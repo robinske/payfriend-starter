@@ -1,0 +1,20 @@
+{% extends 'base.html' %} 
+{% block header %}
+<h1>{% block title %}Send a payment{% endblock %}</h1>
+{% endblock %} 
+{% block content %} 
+<form method="POST" id="send-payment-form">
+  {{ form.hidden_tag() }}
+
+  {% from "_formhelpers.html" import render_field %}
+
+  {{ render_field(form.send_to) }}
+  {{ render_field(form.amount) }}
+  <input type="hidden" name="send-payment-submit" value=""/>
+  <button type="submit">Submit</button>
+</form>
+<form style="display: hidden" method="POST" id="redirect_to">
+  <input type="hidden" id="flash_message" name="flash_message" value=""/>
+</form>
+<script src="{{ url_for('static', filename='js/sessions.js') }}""></script>
+{% endblock %}

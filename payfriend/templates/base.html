@@ -1,0 +1,39 @@
+<!DOCTYPE html> 
+<title>
+  Payfriend
+</title>
+<head>
+  {% block head %}
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}"
+  />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  {% endblock %}
+</head>
+<nav>
+  <h1><a href="{{ url_for('payments.send') }}">💰👯‍ Payfriend</a></h1>
+  <ul>
+    {% if g.user %}
+    <li>
+      <span>Welcome, {{ g.user["email"] }}</span>
+    </li>
+    <li><a href="/payments">My Payments</a></li>
+    <li><a href="/payments/send">Send a Payment</a></li>
+    <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+    {% else %}
+    <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+    <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
+    {% endif %}
+  </ul>
+</nav>
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% for message in get_flashed_messages() %}
+  <div class="flash">{{ message }}</div>
+  {% endfor %} 
+  {% block content %}{% endblock %}
+</section>

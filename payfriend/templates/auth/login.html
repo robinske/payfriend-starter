@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Log In{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="POST">
+  {{ form.hidden_tag() }}
+
+  {% from "_formhelpers.html" import render_field %}
+
+  {{ render_field(form.email) }}
+  {{ render_field(form.password) }}
+  <button name="form-submit" type="submit">Log In</button>
+</form>
+{% endblock %}

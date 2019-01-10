@@ -1,0 +1,22 @@
+{% extends 'base.html' %} 
+{% block header %}
+<h1>{% block title %}Your Payments{% endblock %}</h1>
+{% endblock %} 
+{% block content %} 
+<table style="width:100%">
+  <tr>
+    <th>Your Email</th>
+    <th>Payment ID</th>
+    <th>Sent to</th>
+    <th>Amount</th>
+  </tr>
+{% for payment in payments %}
+<tr>
+  <td>{{ payment.email }}</td>
+  <td>{{ payment.id }}</td>
+  <td>{{ payment.send_to }}</td>
+  <td>{{ "${:,.2f}".format(payment.amount) }}</td> 
+</tr>
+{% endfor %} 
+</table>
+{% endblock %}
