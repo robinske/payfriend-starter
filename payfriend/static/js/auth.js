@@ -2,14 +2,14 @@ $(document).ready(function() {
   $("#send-payment-form").submit(function(e) {
     e.preventDefault();
     formData = $(e.currentTarget).serialize();
-    attemptOneTouchVerification(formData);
+    sendPayment(formData);
   });
 
-  var attemptOneTouchVerification = function(form) {
+  var sendPayment = function(form) {
     $.post("/payments/send", form, function(data) {
       if (data.success) {
         $(".auth-ot").fadeIn();
-        checkForOneTouch(data.payment_id);
+        checkPaymentStatus(data.payment_id);
         
         // display SMS option after 15 seconds
         setTimeout(function() {
@@ -20,14 +20,14 @@ $(document).ready(function() {
     });
   };
 
-  var checkForOneTouch = function(payment_id) {
+  var checkPaymentStatus = function(payment_id) {
     $.get("/payments/status?payment_id=" + payment_id, function(data) {
       if (data == "approved") {
         redirectWithMessage('/payments/', 'Your payment has been approved!')
       } else if (data == "denied") {
         redirectWithMessage('/payments/send', 'Your payment request has been denied.');
       } else {
-        setTimeout(checkForOneTouch(payment_id), 3000);
+        setTimeout(checkPaymentStatus(payment_id), 3000);
       }
     });
   };
