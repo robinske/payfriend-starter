@@ -13,7 +13,6 @@ from . import utils
 from payfriend import db
 from payfriend.forms import RegisterForm, LoginForm, VerifyForm
 from payfriend.models import User
-from payfriend.payment import check_sms_auth
 
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')

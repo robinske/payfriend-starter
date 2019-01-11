@@ -96,7 +96,7 @@ def send_sms_auth(payment):
         'action': payment.id,
         'action_message': 'Verify Payment to {} for {}'.format(
             payment.send_to,
-            payment.amount)
+            str('${:,.2f}'.format(payment.amount)))
     }
     resp = api.users.request_sms(payment.authy_id, options)
     if resp.ok():
