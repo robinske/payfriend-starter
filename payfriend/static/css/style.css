@@ -85,9 +85,6 @@ header .action {
   min-height: 12em;
   resize: vertical;
 }
-input {
-  border-radius: 15px;
-}
 button[type="submit"] {
   background-color: #4caf50;
   color: white;
@@ -99,7 +96,6 @@ button[type="submit"] {
   margin-top: 10px;
 }
 input[type="text"] {
-  width: 100%;
   border-radius: 10px;
 }
 .intl-tel-input {
@@ -134,4 +130,12 @@ button[id="send-sms"] {
 }
 .auth-ot, .auth-sms {
   display: none;
+}
+
+select {
+  /* background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0; */
+  height: 3em;
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 2em;
 }

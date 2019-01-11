@@ -2,7 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import (
     IntegerField, 
     PasswordField, 
-    RadioField, 
+    RadioField,
+    SelectField,
     StringField, 
     validators
 )
@@ -56,5 +57,13 @@ class VerifyForm(FlaskForm):
 
 class PaymentForm(FlaskForm):
     """Form used to submit payments"""
-    send_to = StringField('Send to', validators=[validators.InputRequired()])
+    send_to = SelectField(
+        'Send to', 
+        choices=[
+            ('nl', 'Neville L. <neville@hogwarts.co.uk>'), 
+            ('hg', 'Hermione G. <hermione@hogwarts.co.uk>'), 
+            ('hp', 'Harry P. <harry@hogwarts.co.uk>'), 
+            ('rw', 'Ron W. <ron@hogwarts.co.uk>'), 
+            ('ll', 'Luna L. <luna@hogwarts.co.uk>')], 
+        validators=[validators.InputRequired()])
     amount = IntegerField('Amount', validators=[validators.InputRequired()])
