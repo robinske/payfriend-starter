@@ -60,10 +60,10 @@ class PaymentForm(FlaskForm):
     send_to = SelectField(
         'Send to', 
         choices=[
-            ('nl', 'Neville L. <neville@hogwarts.co.uk>'), 
-            ('hg', 'Hermione G. <hermione@hogwarts.co.uk>'), 
-            ('hp', 'Harry P. <harry@hogwarts.co.uk>'), 
-            ('rw', 'Ron W. <ron@hogwarts.co.uk>'), 
-            ('ll', 'Luna L. <luna@hogwarts.co.uk>')], 
+            ('neville@hogwarts.ac.uk', 'Neville L. <neville@hogwarts.ac.uk>'), 
+            ('hermione@hogwarts.ac.uk', 'Hermione G. <hermione@hogwarts.ac.uk>'), 
+            ('harry@hogwarts.ac.uk', 'Harry P. <harry@hogwarts.ac.uk>'), 
+            ('ron@hogwarts.ac.uk', 'Ron W. <ron@hogwarts.ac.uk>'), 
+            ('luna@hogwarts.ac.uk', 'Luna L. <luna@hogwarts.ac.uk>')],
         validators=[validators.InputRequired()])
     amount = IntegerField('Amount', validators=[validators.InputRequired()])

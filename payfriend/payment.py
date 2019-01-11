@@ -73,7 +73,7 @@ def send():
         # create a unique ID we can use to track payment status
         payment_id = str(uuid.uuid4())
 
-        payment = Payment(payment_id, authy_id, send_to, amount)
+        payment = Payment(payment_id, authy_id, send_to, amount, push_id=None)
         db.session.add(payment)
         db.session.commit()
         return jsonify({ 'success': True })
