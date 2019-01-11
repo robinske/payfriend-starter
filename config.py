@@ -2,6 +2,9 @@ import os
 from dotenv import load_dotenv, find_dotenv
 
 
+load_dotenv(find_dotenv())
+
+
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
     AUTHY_API_KEY = os.environ.get('AUTHY_API_KEY')

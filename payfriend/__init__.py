@@ -1,6 +1,5 @@
 import os
 from config import config
-from dotenv import load_dotenv, find_dotenv
 from flask import Flask, render_template, g
 from flask_sqlalchemy import SQLAlchemy
 
@@ -12,7 +11,6 @@ def create_app():
     """Create and configure an instance of the Flask application."""
     app = Flask(__name__)
 
-    load_dotenv(find_dotenv())
     config_name = os.environ.get('FLASK_ENV', 'default')
     app.config.from_object(config[config_name])
 
