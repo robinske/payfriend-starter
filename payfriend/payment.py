@@ -52,7 +52,8 @@ def get_user_payments(email):
             "email": user.email,
             "id": payment.id,
             "send_to": payment.send_to,
-            "amount": payment.amount
+            "amount": payment.amount,
+            "status": payment.status
         })
     
     return payments
